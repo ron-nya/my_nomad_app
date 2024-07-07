@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "953828657324",
+    "project_id": "my-nomad-app01",
+    "storage_bucket": "my-nomad-app01.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:953828657324:android:1a4403cbc0aa21f40d3709",
+        "android_client_info": {
+          "package_name": "com.nomad.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYvM_qK3d2-9j0kTCxIrPInTDwrJbFba4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
