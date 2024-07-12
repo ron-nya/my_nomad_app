@@ -4,11 +4,14 @@ import 'package:my_app/constants/button_sizes.dart';
 
 class PostButton extends StatelessWidget {
   final String buttonText;
-  final void Function() onPressed;
+  final void Function()? onPressed;
+  final bool isEnabled;
+
   const PostButton({
     super.key,
     required this.buttonText,
-    required this.onPressed,
+    this.onPressed,
+    this.isEnabled = true,
   });
 
   @override
@@ -19,7 +22,10 @@ class PostButton extends StatelessWidget {
       width: buttonSize.width,
       height: buttonSize.height,
       child: TextButton(
-        onPressed: onPressed,
+        onPressed: isEnabled ? onPressed : null,
+        style: isEnabled
+            ? null
+            : TextButton.styleFrom(backgroundColor: AppColors.grey),
         child: Text(
           buttonText,
           style: Theme.of(context)

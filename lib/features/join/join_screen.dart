@@ -12,38 +12,82 @@ class JoinScreen extends StatefulWidget {
   const JoinScreen({super.key});
 
   @override
-  State<JoinScreen> createState() => _JoinScreenState();
+  State<JoinScreen> createState() => _LoginScreenState();
 }
 
-class _JoinScreenState extends State<JoinScreen> {
+class _LoginScreenState extends State<JoinScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  String? _validateEmail(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your email';
+    }
+    // 간단한 이메일 패턴 검증
+    if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+      return 'Please enter a valid email';
+    }
+    return null;
+  }
+
+  String? _validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your password';
+    }
+    if (value.length < 8) {
+      return 'Password must be at least 8 characters long';
+    }
+    return null;
+  }
+
+  void _submitForm(String path) {
+    if (_formKey.currentState!.validate()) {
+      context.go(path);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const FaIcon(
-                FontAwesomeIcons.fire,
-                color: AppColors.indianRed,
-              ),
-              Gaps.h12,
-              Text(
-                'MOOD',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              Gaps.h12,
-              const FaIcon(
-                FontAwesomeIcons.fire,
-                color: AppColors.indianRed,
-              ),
-            ],
+      child: Form(
+        key: _formKey,
+        child: Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const FaIcon(
+                  FontAwesomeIcons.fire,
+                  color: AppColors.indianRed,
+                ),
+                Gaps.h12,
+                Text(
+                  'MOOD',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                Gaps.h12,
+                const FaIcon(
+                  FontAwesomeIcons.fire,
+                  color: AppColors.indianRed,
+                ),
+              ],
+            ),
           ),
-        ),
-        body: CommonPadding(
-          child: Center(
+          body: CommonPadding(
             child: Stack(
               children: [
                 Column(
@@ -54,17 +98,22 @@ class _JoinScreenState extends State<JoinScreen> {
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                     Gaps.v48,
-                    const InputTextField(
+                    InputTextField(
                       labelText: 'Email',
+                      controller: _emailController,
+                      validator: _validateEmail,
                     ),
                     Gaps.v24,
-                    const InputTextField(
+                    InputTextField(
                       labelText: 'Password',
+                      isPassword: true,
+                      controller: _passwordController,
+                      validator: _validatePassword,
                     ),
-                    Gaps.v24,
+                    Gaps.v48,
                     PostButton(
                       buttonText: 'Create Account',
-                      onPressed: () => context.go('/home'),
+                      onPressed: () => _submitForm('/login'),
                     ),
                   ],
                 ),
@@ -75,7 +124,7 @@ class _JoinScreenState extends State<JoinScreen> {
                   child: Align(
                     alignment: Alignment.center,
                     child: PostButton(
-                      buttonText: 'Log in',
+                      buttonText: 'Log in →',
                       onPressed: () => context.go('/login'),
                     ),
                   ),
