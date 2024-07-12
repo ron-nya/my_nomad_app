@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:my_app/config/theme/app_colors.dart';
 import 'package:my_app/constants/gaps.dart';
 import 'package:my_app/constants/sizes.dart';
 import 'package:my_app/widgets/common_padding.dart';
