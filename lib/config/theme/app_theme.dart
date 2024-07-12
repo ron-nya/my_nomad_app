@@ -9,6 +9,10 @@ class AppTheme {
     textTheme: AppTheme.textTheme,
     brightness: Brightness.light,
     primaryColor: AppColors.indianRed,
+    cardColor: AppColors.mintGreen,
+    dividerColor: AppColors.davyGrey,
+    focusColor: AppColors.glaucous,
+    unselectedWidgetColor: AppColors.grey,
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
         foregroundColor: AppColors.white,

@@ -44,7 +44,7 @@ class _InputTextFieldState extends State<InputTextField> {
     return TextFormField(
       controller: widget.controller,
       obscureText: _isObscure,
-      cursorColor: AppColors.davyGrey,
+      cursorColor: Theme.of(context).dividerColor,
       validator: widget.validator,
       decoration: InputDecoration(
         filled: true,
@@ -53,7 +53,7 @@ class _InputTextFieldState extends State<InputTextField> {
             ? IconButton(
                 icon: Icon(
                   _isObscure ? Icons.visibility_off : Icons.visibility,
-                  color: Colors.grey,
+                  color: Theme.of(context).unselectedWidgetColor,
                 ),
                 onPressed: _toggleObscure,
               )
@@ -61,13 +61,13 @@ class _InputTextFieldState extends State<InputTextField> {
         contentPadding: const EdgeInsets.all(Sizes.size10),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(Sizes.size8),
-          borderSide: const BorderSide(
-            color: AppColors.davyGrey,
+          borderSide: BorderSide(
+            color: Theme.of(context).dividerColor,
           ),
         ),
-        focusedBorder: const OutlineInputBorder(
+        focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: AppColors.glaucous,
+            color: Theme.of(context).focusColor,
           ),
         ),
         labelText: widget.labelText,

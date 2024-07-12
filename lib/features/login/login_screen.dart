@@ -70,9 +70,9 @@ class _LoginScreenState extends State<LoginScreen> {
             title: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const FaIcon(
+                FaIcon(
                   FontAwesomeIcons.fire,
-                  color: AppColors.indianRed,
+                  color: Theme.of(context).primaryColor,
                 ),
                 Gaps.h12,
                 Text(
@@ -80,9 +80,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 Gaps.h12,
-                const FaIcon(
+                FaIcon(
                   FontAwesomeIcons.fire,
-                  color: AppColors.indianRed,
+                  color: Theme.of(context).primaryColor,
                 ),
               ],
             ),

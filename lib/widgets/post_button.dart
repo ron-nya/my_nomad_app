@@ -25,7 +25,9 @@ class PostButton extends StatelessWidget {
         onPressed: isEnabled ? onPressed : null,
         style: isEnabled
             ? null
-            : TextButton.styleFrom(backgroundColor: AppColors.grey),
+            : TextButton.styleFrom(
+                backgroundColor: Theme.of(context).unselectedWidgetColor,
+              ),
         child: Text(
           buttonText,
           style: Theme.of(context)
