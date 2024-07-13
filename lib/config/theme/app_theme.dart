@@ -12,7 +12,13 @@ class AppTheme {
     cardColor: AppColors.mintGreen,
     dividerColor: AppColors.davyGrey,
     focusColor: AppColors.glaucous,
+    canvasColor: AppColors.white,
     unselectedWidgetColor: AppColors.grey,
+    shadowColor: AppColors.black.withOpacity(0.5),
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      backgroundColor: AppColors.lemonChiffon,
+      selectedItemColor: AppColors.indianRed,
+    ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
         foregroundColor: AppColors.white,
@@ -69,7 +75,7 @@ class AppTheme {
       color: AppColors.black,
     ),
     titleSmall: TextStyle(
-      fontSize: Sizes.size18,
+      fontSize: Sizes.size16,
       fontWeight: FontWeight.bold,
       color: AppColors.black,
     ),
@@ -78,7 +84,11 @@ class AppTheme {
       color: AppColors.black,
     ),
     bodyMedium: TextStyle(
-      fontSize: Sizes.size12,
+      fontSize: Sizes.size18,
+      color: AppColors.black,
+    ),
+    bodySmall: TextStyle(
+      fontSize: Sizes.size14,
       color: AppColors.black,
     ),
     labelLarge: TextStyle(

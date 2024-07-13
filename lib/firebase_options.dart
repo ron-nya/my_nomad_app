@@ -71,4 +71,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'my-nomad-app01.appspot.com',
     iosBundleId: 'com.example.myApp',
   );
+
 }

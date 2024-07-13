@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_app/constants/gaps.dart';
 import 'package:my_app/constants/sizes.dart';
+import 'package:my_app/features/main/main_screen.dart';
+import 'package:my_app/features/login/view_models/login_view_model.dart';
+import 'package:my_app/widgets/common_appbar.dart';
 import 'package:my_app/widgets/common_padding.dart';
 import 'package:my_app/widgets/input_text_field.dart';
 import 'package:my_app/widgets/post_button.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
+  static String routeUrl = '/login';
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -41,9 +45,11 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _submitForm(String path) {
-    if (_formKey.currentState!.validate()) {
-      context.go(path);
-    }
+    ref.read(loginProvider.notifier).login(
+          _emailController.text,
+          _passwordController.text,
+          context,
+        );
   }
 
   @override
@@ -64,28 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Form(
         key: _formKey,
         child: Scaffold(
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                FaIcon(
-                  FontAwesomeIcons.fire,
-                  color: Theme.of(context).primaryColor,
-                ),
-                Gaps.h12,
-                Text(
-                  'MOOD',
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                Gaps.h12,
-                FaIcon(
-                  FontAwesomeIcons.fire,
-                  color: Theme.of(context).primaryColor,
-                ),
-              ],
-            ),
-          ),
+          appBar: const CommonAppbar(),
           body: CommonPadding(
             child: Stack(
               children: [
@@ -112,7 +97,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     Gaps.v48,
                     PostButton(
                       buttonText: 'Enter',
-                      onPressed: () => _submitForm('/home'),
+                      onPressed: () => _submitForm(
+                        MainScreen.routeUrl,
+                      ),
                     ),
                   ],
                 ),

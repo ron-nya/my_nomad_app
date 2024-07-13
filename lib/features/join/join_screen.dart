@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_app/constants/gaps.dart';
 import 'package:my_app/constants/sizes.dart';
+import 'package:my_app/features/join/view_models/join_view_model.dart';
+import 'package:my_app/widgets/common_appbar.dart';
 import 'package:my_app/widgets/common_padding.dart';
 import 'package:my_app/widgets/input_text_field.dart';
 import 'package:my_app/widgets/post_button.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class JoinScreen extends StatefulWidget {
+class JoinScreen extends ConsumerStatefulWidget {
+  static String routeUrl = '/join';
   const JoinScreen({super.key});
 
   @override
-  State<JoinScreen> createState() => _LoginScreenState();
+  ConsumerState<JoinScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<JoinScreen> {
+class _LoginScreenState extends ConsumerState<JoinScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -40,9 +43,24 @@ class _LoginScreenState extends State<JoinScreen> {
     return null;
   }
 
-  void _submitForm(String path) {
+  Future<void> _submitForm() async {
     if (_formKey.currentState!.validate()) {
-      context.go(path);
+      ref.read(joinForm.notifier).state = {
+        "email": _emailController.text,
+        "password": _passwordController.text,
+      };
+      try {
+        await ref.read(joinProvider.notifier).join();
+        if (mounted) {
+          context.go('/login');
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Join failed: $e')),
+          );
+        }
+      }
     }
   }
 
@@ -64,28 +82,7 @@ class _LoginScreenState extends State<JoinScreen> {
       child: Form(
         key: _formKey,
         child: Scaffold(
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                FaIcon(
-                  FontAwesomeIcons.fire,
-                  color: Theme.of(context).primaryColor,
-                ),
-                Gaps.h12,
-                Text(
-                  'MOOD',
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                Gaps.h12,
-                FaIcon(
-                  FontAwesomeIcons.fire,
-                  color: Theme.of(context).primaryColor,
-                ),
-              ],
-            ),
-          ),
+          appBar: const CommonAppbar(),
           body: CommonPadding(
             child: Stack(
               children: [
@@ -112,7 +109,7 @@ class _LoginScreenState extends State<JoinScreen> {
                     Gaps.v48,
                     PostButton(
                       buttonText: 'Create Account',
-                      onPressed: () => _submitForm('/login'),
+                      onPressed: () => _submitForm(),
                     ),
                   ],
                 ),
